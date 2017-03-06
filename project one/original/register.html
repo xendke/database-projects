@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Register</title>
+<script type="text/javascript" src="sha256.js">
+</script>
+<script type="text/javascript">
+function encode() {
+	var pw1 = document.f.pw.value;
+    if ((document.f.un.value.length<1) ||(pw1.length<1)) {
+		alert("Need to enter User Name and Password. Please try again.");
+		return false;
+	}
+	else
+		    
+	if (pw1 == document.f.cpw.value) {
+	    document.f.pw.value = SHA256(pw1);
+	    document.f.cpw.value = document.f.pw.value;
+	    return true;
+		}
+	else {
+		alert("passwords do not match. Please try again.");
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<form name="f" action="completereg.php" onSubmit="return encode();" method="post">
+<table>
+<tr>
+<td>User id (email address) </td><td><input type="email" name="un" required /></td></tr>
+<tr><td>Password </td><td><input type="password" name="pw" required /></td></tr>
+<tr><td>Confirm password </td><td><input type="password" name="cpw" required/></td></tr>
+</table>
+<input type="submit" value="Register"/>
+</form>
+</body>
+</html>

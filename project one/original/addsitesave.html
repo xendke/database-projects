@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add website info, login</title>
+<script type="text/javascript" src="sha256.js">
+</script>
+<script type="text/javascript">
+function encode() {
+	var pw1 = document.f.pw.value;
+	if (document.f.saveok.value!="No") {
+	try {
+		localStorage.setItem("researchun",document.f.un.value);
+		localStorage.setItem("researchpw",pw1);
+	}
+	catch(e) {
+		alert("error on local storage "+e);
+		}
+	}
+    if ((document.f.un.value.length<1) ||(pw1.length<1)) {
+		alert("Need to enter User Name and Password. Please try again.");
+		return false;
+	}
+	else
+		  {  
+	    document.f.pw.value = SHA256(pw1);
+	    return true;
+		}
+}
+function retrieveinfo() {
+	var savedun;
+	var savedpw;
+	try {
+		savedun = localStorage.getItem("researchun");
+	    savedpw = localStorage.getItem("researchpw");
+		if (savedun) {
+		document.f.un.value = savedun;
+		document.f.pw.value = savedpw;
+		document.getElementById("greeting").innerHTML="Welcome Back.";
+		}
+	}
+	catch(e) {}
+}
+</script>
+</head>
+<body onLoad="retrieveinfo();">
+<div id="greeting"></div>
+<form name="f" action="addsite.php"  onSubmit="return encode();"  method="post">
+Site: <input name="stitle" placeholder="Your name for site" required/><br/>
+Date: <input name="sdate" type="date" placeholder="YYYY-MM-DD" required/>   <br/>
+Site description: <br/>
+<textarea name="sdesc" cols="30" rows="2">
+</textarea> <br/>
+URL:   <input name="surl" type="url" placeholder="http://   " required/><br/>
+Category: <input name="scat" type="text" required/><hr/>
+Username: <input name="un" type="email" required / > <br/>
+Password: <input name="pw" type="password" required /> <br/> 
+Save on this computer for next time? <input name="saveok" value="No" />
+<input type="submit" value="Submit Site"/>
+</form>
+</body>
+</html>
