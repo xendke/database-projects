@@ -1,0 +1,20 @@
+<div style='padding: 120px 0;'>
+          <div class='demo-card-wide mdl-card mdl-shadow--2dp' style='margin: auto; width: 75%;'>
+            <div class='mdl-card__title' style='height: 176px; background: url('https://s-media-cache-ak0.pinimg.com/736x/6b/db/e0/6bdbe0015cd690f4ee3986bdaa1110ec.jpg') center / cover;'>
+              <h2 class='mdl-card__title-text'>Welcome</h2>
+            </div>
+            <div class='mdl-card__supporting-text'>
+              Save your favorite websites in one place.
+            </div>
+            <div class='mdl-card__actions mdl-card--border'>
+              <a href='register.php' class='mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect'>
+                Get Started
+              </a>
+            </div>
+            <div class='mdl-card__menu'>
+              <button class='mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect'>
+                <i class='material-icons'>share</i>
+              </button>
+            </div>
+          </div>
+        </div>
