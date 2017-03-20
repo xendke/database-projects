@@ -53,7 +53,7 @@
           return;
         }
 
-        $conn = mysqli_connect("localhost", "webuser", "password", "webdata");
+        require('database.php');
         $username = addslashes($_POST['user']);
         $password = $_POST['pass'];
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);

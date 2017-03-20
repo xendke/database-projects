@@ -44,7 +44,7 @@ if (empty($_SESSION["user"])) {
         <?php
 
         $username = $_SESSION['user'];
-        $conn = mysqli_connect("localhost", "webuser", "password", "webdata");
+        require('database.php');
         $query = "SELECT id FROM users WHERE username='$username' LIMIT 1";
         $user_record = mysqli_query($conn, $query);
         $user_id = mysqli_fetch_array($user_record);

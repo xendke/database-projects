@@ -85,7 +85,7 @@ if (empty($_SESSION["user"])) {
         $cat = $_POST['category'];
         $date = date("Y-m-d");
 
-        $conn = mysqli_connect("localhost", "webuser", "password", "webdata");
+        require('database.php');
         $username = $_SESSION['user'];
 
         $query = "SELECT id FROM users WHERE username='$username' LIMIT 1";
