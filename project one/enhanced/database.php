@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
 <?php
 $conn;
 $dbname;
@@ -51,5 +46,3 @@ function create_table($tablename, $fields) {
 
 connect_and_select();
 ?>
-</body>
-</html>

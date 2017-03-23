@@ -17,6 +17,15 @@ if ($_GET["logout"] == 1) {
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-light_green.min.css" />
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+  function hideChip() {
+    var x = document.getElementById('chip');
+    if (x.style.display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+  }</script>
 </head>
 <body>
   <!-- Always shows a header, even in smaller screens. -->
@@ -41,7 +50,7 @@ if ($_GET["logout"] == 1) {
       </nav>
     </div>
     <main class="mdl-layout__content">
-      <div class="page-content" style="margin: auto; width: 30%; padding: 70px 0;">
+      <div class="page-content" style="margin: auto; width: 350px; padding: 140px 0;">
         <form method="post" autocomplete="off">
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%;">
             <input class="mdl-textfield__input" id="user" type="text" name="user"><label class="mdl-textfield__label" for="user">Username</label>
@@ -53,6 +62,22 @@ if ($_GET["logout"] == 1) {
         </form>
         <?php
         if(empty($_POST["user"]) || empty($_POST["pass"])) {
+          ?>
+        </div>
+      </main>
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <div class="mdl-logo">Bookmarker</div>
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Privacy</a></li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+  </body>
+  </html>
+          <?php
           return;
         }
 
@@ -68,10 +93,16 @@ if ($_GET["logout"] == 1) {
               header("Location: index.php");
               exit();
             } else {
-              echo("Login Failed");
+              echo("<div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
+              <span class='mdl-chip__text'>Login Failed</span>
+              <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
+              </span></div>");
             }
           } else {
-            echo("Login Failed");
+            echo("<div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
+            <span class='mdl-chip__text'>Login Failed</span>
+            <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
+            </span></div>");
           }
           mysqli_free_result($result);
         }
@@ -80,6 +111,15 @@ if ($_GET["logout"] == 1) {
         ?>
       </div>
     </main>
+    <footer class="mdl-mini-footer">
+      <div class="mdl-mini-footer__left-section">
+        <div class="mdl-logo">Bookmarker</div>
+        <ul class="mdl-mini-footer__link-list">
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </footer>
   </div>
 </body>
 </html>

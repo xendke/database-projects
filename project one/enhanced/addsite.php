@@ -43,7 +43,7 @@ if (empty($_SESSION["user"])) {
       <span class="mdl-layout-title">Bookmarker</span>
       <nav class="mdl-navigation">
         <a class='mdl-navigation__link' href='index.php'>Home</a>
-        <a class='mdl-navigation__link' href='showsites.php'>Show Bookmarks</a>
+        <a class='mdl-navigation__link' href='showsites.php'>My Bookmarks</a>
         <a class='mdl-navigation__link' href='login.php?logout=1'>Log Out</a>
       </nav>
     </div>
@@ -73,6 +73,12 @@ if (empty($_SESSION["user"])) {
             </select>
             <label class="mdl-selectfield__label" for="category">Category</label>
           </div>
+          <div  style="width: 50%; margin: auto; display: block; padding: 15px 0;">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox">
+              <input type="checkbox" name="public" id="checkbox" class="mdl-checkbox__input" value="Yes">
+              <span class="mdl-checkbox__label">Make Bookmark Public</span>
+            </label>
+          </div>
           <input class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' style="width: 100%;" type="submit" value="Add">
         </form>
         <?php
@@ -84,6 +90,7 @@ if (empty($_SESSION["user"])) {
         $desc = $_POST['description'];
         $cat = $_POST['category'];
         $date = date("Y-m-d");
+        $public = $_POST['public'];
 
         require('database.php');
         $username = $_SESSION['user'];
@@ -92,10 +99,24 @@ if (empty($_SESSION["user"])) {
         $user_record = mysqli_query($conn, $query);
         $user_id = mysqli_fetch_array($user_record);
         $user_id = $user_id['id'];
+        mysqli_begin_transaction($conn, MYSQLI_TRANS_START_READ_WRITE);
         $query = "INSERT INTO bookmarks (title, url, description, category, date_added, user_id) VALUES ('$title', '$url', '$desc', '$cat', '$date', $user_id)";
+
         if(mysqli_query($conn, $query)) {
+          if(isset($public) && $public == 'Yes') {
+            $query = "INSERT INTO public_bookmarks(bookmark_id) VALUES (LAST_INSERT_ID())";
+            mysqli_query($conn, $query);
+            mysqli_commit($conn);
+          } else {
+            mysqli_commit($conn);
+          }
           echo("<div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
           <span class='mdl-chip__text'>Bookmark Successfully Added</span>
+          <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
+          </span></div>");
+        } else {
+          echo("<div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
+          <span class='mdl-chip__text'>Error: Could not add bookmark</span>
           <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
           </span></div>");
         }
