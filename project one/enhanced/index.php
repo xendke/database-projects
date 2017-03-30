@@ -66,6 +66,9 @@ session_start();
                 <a href='register.php' class='mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect'>
                   Get Started
                 </a>
+                <a href='showsites.php' class='mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect'>
+                  Lurk
+                </a>
               </div>
               <div class='mdl-card__menu'>
                 <button class='mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect'>
@@ -83,19 +86,22 @@ session_start();
             $user_id = $user_id['id'];
 
             $query = "SELECT b.title, b.url, b.category, b.description FROM bookmarks as b RIGHT JOIN public_bookmarks as pb ON b.id=pb.bookmark_id";
-            $user_record = mysqli_query($conn, $query);
-            echo("<table class='mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp' style='margin: auto; width: 70%;'>");
-            echo("<thead><tr><th class='mdl-data-table__cell--non-numeric'>Title</th><th>URL</th><th>Category</th></tr></thead>");
-            echo("<tbody>");
-            while($record = mysqli_fetch_array($user_record)) {
-              echo ("<tr id='".$record['title']."'>");
-              echo("<td class='mdl-data-table__cell--non-numeric'>".$record['title']."</td><td><a style='color: black;' href='http://".$record['url']."'>".$record['url']."</td><td>".$record['category']."</td>");
-              echo("</tr>");
-              echo("<div class='mdl-tooltip' data-mdl-for='".$record['title']."'>".$record['description']."</div>");
+            $table = mysqli_query($conn, $query);
+            if(mysqli_num_rows($table) > 0) {
+              echo("<h5 style='text-align: center;'> Public Bookmarks </h5>");
+              echo("<table class='mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp' style='margin: auto; width: 70%;'>");
+              echo("<thead><tr><th class='mdl-data-table__cell--non-numeric'>Title</th><th>URL</th><th>Category</th></tr></thead>");
+              echo("<tbody>");
+              while($record = mysqli_fetch_array($table)) {
+                echo ("<tr id='".$record['title']."'>");
+                echo("<td class='mdl-data-table__cell--non-numeric'>".$record['title']."</td><td><a style='color: black;' href='http://".$record['url']."'>".$record['url']."</td><td>".$record['category']."</td>");
+                echo("</tr>");
+                echo("<div class='mdl-tooltip' data-mdl-for='".$record['title']."'>".$record['description']."</div>");
+              }
+              echo("</tbody></table>");
+            } else {
+              echo("No Public Bookmarks");
             }
-            echo("</tbody></table>");
-
-            $username = $_SESSION['user'];
 
             mysqli_close($conn);
           }

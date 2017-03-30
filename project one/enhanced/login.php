@@ -3,7 +3,8 @@ session_start();
 if ($_GET["logout"] == 1) {
   session_unset();
   session_destroy();
-  header("Location: index.php");
+  echo("<script type='text/javascript'>localStorage.clear();");
+  echo("window.location = \"index.php\";</script>");
   exit();
 } elseif (!empty($_SESSION["user"])) {
   header("Location: index.php");
@@ -90,7 +91,9 @@ if ($_GET["logout"] == 1) {
             $row = mysqli_fetch_array($result);
             if(password_verify($password, $row['password'])) {
               $_SESSION["user"] = $username;
-              header("Location: index.php");
+              echo("<script type='text/javascript'>localStorage.setItem('user', '$username');");
+              echo("window.setTimeout(function(){ window.location = \"index.php\"; },2000);</script>");
+              echo("<div id='p2' class='mdl-progress mdl-js-progress mdl-progress__indeterminate'></div>");
               exit();
             } else {
               echo("<div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>

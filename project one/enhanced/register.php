@@ -106,7 +106,7 @@
 
           } else {
             ?>
-            <div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
+            <div style='text-align: center; padding: 0px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
               <span class='mdl-chip__text'>Are you a robot?</span>
               <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
             </span></div>
@@ -116,7 +116,7 @@
         }
         else{
           ?>
-          <div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
+          <div style='text-align: center; padding: 0px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
             <span class='mdl-chip__text'>Are you a robot?</span>
             <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
           </span></div>
@@ -137,8 +137,8 @@
           exit();
         } else {
           ?>
-          <div style='text-align: center; padding: 40px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
-            <span class='mdl-chip__text'>Username already exists.</span>
+          <div style='text-align: center; padding: 0px 0;'><span class='mdl-chip mdl-chip--deletable' style='margin: auto;' id='chip'>
+            <span class='mdl-chip__text'>Username/Email already exists.</span>
             <button type='button' class='mdl-chip__action' onclick='hideChip();'><i class='material-icons'>cancel</i></button>
           </span></div>
           <?php
