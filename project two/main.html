@@ -59,6 +59,7 @@
   }
 
   var updateCategoryName = function (input) {
+    //var input = [{old: field_name, new: new_data}];
     axios.post('./updateCategories.php', {
       data: input
     })
@@ -83,10 +84,22 @@
       console.log(error);
     });
   }
-  var newMembers = function () {
-    members = [
-      {b_name: "Xavier Gomezs", fax: "1-(914)565-1708"}
-    ];
+  var toggleMemberStatus = function (members) {
+    axios.post('./manageMembers.php', {
+      data: members,
+      action: "toggle"
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var newMembers = function (members) {
+    //members = [
+      //{b_name: "Xavier Gomezs", fax: "1-(914)565-1708"}
+    //];
     axios.post('./updateMembers.php', {
       data: members
     })
@@ -97,8 +110,8 @@
       console.log(error);
     });
   }
-  var reinstate = function () {
-    members = [56, 87];
+  var reinstate = function (members) {
+    //members = [56, 87];
     axios.post('./manageMembers.php', {
       data: members,
       action: "reinstate"
@@ -110,8 +123,8 @@
       console.log(error);
     });
   }
-  var suspend = function () {
-    members = [56, 87];
+  var suspend = function (members) {
+    //members = [56, 87];
     axios.post('./manageMembers.php', {
       data: members,
       action: "suspend"

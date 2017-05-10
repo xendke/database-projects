@@ -10,7 +10,7 @@
 *         id,
 *         ...
 *       ]
-*     $_POST['action'] - "suspend" / "reinstate" - the action to perform on all ids
+*     $_POST['action'] - "suspend" / "reinstate" / "toggle"- the action to perform on all ids
 *
 * Response:
 *    {
@@ -57,6 +57,22 @@ if($action === "reinstate") {
 } elseif ($action === "suspend") {
   foreach ($data as $id) {
     $query = "INSERT INTO MM_MEMBERS_S (m_id) VALUES ($id)";
+
+    if(mysqli_query($conn, $query)) {
+      array_push($responseItem['ids'], $id);
+    } else {
+      $has_failed = true;
+      array_push($responseItem['errors'], mysqli_error($conn));
+    }
+  }
+} elseif ($action === "toggle") {
+  foreach ($data as $id) {
+    $query = "SELECT m_id FROM MM_MEMBERS_S WHERE m_id=$id";
+    if($res = mysqli_query($conn, $query) && mysqli_num_rows($res) >= 1) { // is suspended
+        $query = "DELETE FROM MM_MEMBERS_S WHERE m_id=$id";
+    } else { // is not suspended
+        $query = "INSERT INTO MM_MEMBERS_S (m_id) VALUES ($id)";
+    }
 
     if(mysqli_query($conn, $query)) {
       array_push($responseItem['ids'], $id);
