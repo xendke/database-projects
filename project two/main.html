@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+  var getInfo = function (type) {
+    axios.get('./getInfo.php?request='+type)
+    .then(function (response) {
+      console.log(response.data);
+      //document.body.innerHTML += "<pre>"+ JSON.stringify(response.data, null, 3) +"</pre>";
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var login = function (user, pass) {
+    axios.post('./user.php?request=login', {
+      username: user,
+      password: pass
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var checkLogin = function () {
+    axios.get('./user.php?request=check')
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var logout = function () {
+    axios.get('./user.php?request=logout')
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  var updateMemberPiece = function (id, field_name, new_data) {
+    axios.post('./updateInfo.php?on=member', {
+      id: id,
+      field: field_name,
+      new: new_data
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  var updateCategoryName = function (input) {
+    axios.post('./updateCategories.php', {
+      data: input
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var updateMembers = function () {
+    members = [
+      {id: 379, b_name: "Weber Incs", fax: "1-(914)565-1708"}
+    ];
+    axios.post('./updateMembers.php', {
+      data: members
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var newMembers = function () {
+    members = [
+      {b_name: "Xavier Gomezs", fax: "1-(914)565-1708"}
+    ];
+    axios.post('./updateMembers.php', {
+      data: members
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var reinstate = function () {
+    members = [56, 87];
+    axios.post('./manageMembers.php', {
+      data: members,
+      action: "reinstate"
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var suspend = function () {
+    members = [56, 87];
+    axios.post('./manageMembers.php', {
+      data: members,
+      action: "suspend"
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  var startUpdate = function () {
+    var field_name = document.getElementById("field_name").value;
+    var new_data = document.getElementById("new_data").value;
+    var selection = document.getElementById("target_type").value;
+    if(selection === "category") {
+      var input = [{old: field_name, new: new_data}];
+      updateCategoryName(input);
+    } else if (selection === "member") {
+      updateMemberPiece(5, field_name, new_data);
+    }
+  }
+  </script>
+</head>
+<body>
+  <button onclick='getInfo("categories")'>Categories</button>
+  <button onclick='getInfo("all_categories")'>AllCategories</button>
+  <button onclick='getInfo("suspended")'>Suspended</button>
+  <button onclick='getInfo("active")'>Active</button>
+</br>
+  <button onclick='login("admin", "password")'>Log In</button>
+  <button onclick='checkLogin()'>Check Login</button>
+  <button onclick='logout()'>Log Out</button>
+</br>
+  <form>
+    <select id="target_type">
+      <option value="category">Category</option>
+      <option value="member">Member</option>
+    </select>
+    <input id="field_name" type="text">
+    <input id="new_data" type="text">
+    <button type="button" onclick="startUpdate()">Update</button> <!-- type="button" so that the form is not actually submitted-->
+  </form>
+</br>
+<button onclick='updateMembers()'>Bulk Members</button>
+<button onclick='newMembers()'>new Members</button>
+</br>
+<button onclick='reinstate()'>Reinstate</button>
+<button onclick='suspend()'>Suspend</button>
+</body>
+</html>

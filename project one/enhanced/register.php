@@ -13,7 +13,16 @@
     } else {
       x.style.display = 'none';
     }
-  }</script>
+  }
+
+  // var userInput = document.getElementById('user');
+  // userInput.addEventListener("keydown", function(event) {
+  //   event.preventDefault();
+  //
+  //
+  // });
+
+  </script>
   <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
@@ -125,10 +134,14 @@
         }
 
         require('database.php');
-        $username = addslashes($_POST['user']);
-        $password = $_POST['pass'];
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $email = $_POST['email'];
+        $username         = (preg_match("^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$", $_POST['user'])) ? addslashes($_POST['user']) : '';
+        $password         = $_POST['pass'];
+        $hashed_password  = password_hash($password, PASSWORD_DEFAULT);
+        $email            = (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) !== false) ? $_POST['email'] : '';
+
+        if (empty($username) || empty($email) || empty($password)) {
+          exit();
+        }
 
         $query = "INSERT INTO users (username, password, email) VALUES ('$username', '$hashed_password', '$email')";
         if(mysqli_query($conn, $query)){

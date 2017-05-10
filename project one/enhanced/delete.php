@@ -9,6 +9,8 @@ $user_record = mysqli_query($conn, $query);
 $user_id = mysqli_fetch_array($user_record);
 $user_id = $user_id['id'];
 
+header('Content-Type: application/json');
+
 if(empty($user_id)) {
   echo(false);
   exit();
@@ -17,10 +19,10 @@ if(empty($user_id)) {
 foreach ($targets as $id) {
   $query = "DELETE FROM bookmarks WHERE id=$id AND user_id=$user_id";
   if (!mysqli_query($conn, $query)) {
-    echo(false);
+    echo(json_encode( false ));
     exit();
   }
 }
-echo(true);
+echo(json_encode( true ));
 exit();
 ?>

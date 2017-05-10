@@ -85,8 +85,10 @@ if (empty($_SESSION["user"])) {
         if(empty($_POST['title']) || empty($_POST['url'])) {
           return;
         }
-        $title = $_POST['title'];
-        $url = $_POST['url'];
+
+        $title = (preg_match("^[\w\s-_]*$", $title)) ? $_POST['title'] : '';
+        $url = (filter_var($_POST['url'], FILTER_VALIDATE_URL) !== false) ? $_POST['url'] : '';
+
         $desc = $_POST['description'];
         $cat = $_POST['category'];
         $date = date("Y-m-d");

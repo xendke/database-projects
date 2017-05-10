@@ -30,6 +30,7 @@ session_start();
       user: username
     })
     .then(function (response) {
+      console.log(response);
       if(response.data==1) { // remove rows
         for (var x = 0; x < selected.length; x++) {
           selected[x].parentNode.removeChild(selected[x]);
